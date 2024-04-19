@@ -109,10 +109,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             border: 2px solid black; /* Change the border color to blue */
             border-radius: 10px; 
             box-shadow: 10px 10px 100px rgba(0, 0, 0, 0.1);
-            width: 350px;
         }
         .card img {
-            border: 1px solid black;
+            
             border-radius: 10px;
             box-shadow: 10px 10px 100px rgba(0, 0, 0, 0.1);
         }
@@ -126,7 +125,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             text-align:center;
         }
         .img-con {
-        width: 300px;
+        width: auto;
         height: 160px;
         position: relative;
         margin: 0 auto; /* Center the image horizontally */
@@ -155,31 +154,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 .mt-2 {
     margin-left:15px;
 }
-
     </style>
     </head>
     <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand me-auto" href="#">Logo</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#" id="home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" id="listing">Listing</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" id="profile">Profile</a>
-                </li>
-            </ul>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand me-auto" href="#">Logo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#" id="home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="listing">Listing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="profile">Profile</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
     <div class="container mt-3">
     <div class="container mt-3">
@@ -197,7 +195,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="radio" name="lostFound" id="lost" autocomplete="off"> Lost
                         </label>
                         <label class="btn btn-outline-dark">
-                            <input type="radio" name="lostFound" id="found" autocomplete="off"> Seen
+                            <input type="radio" name="lostFound" id="found" autocomplete="off"> Found
                         </label>
                     </div>
                     </div>
@@ -207,9 +205,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="row" id="dataset">
             <!---dataset-->
         </div>
-
-        <!--accomplished-->
-        
         <!-- Modal -->
         <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -254,10 +249,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="mb-3">
                         <label for="image" class="form-label">Image</label>
                         <input type="file" name="image" id="image" class="image">
-                    </div>
-
-                    <div class="mb-3 img-prev">
-                        
                     </div>
 
                     <div class="mb-3">
@@ -331,24 +322,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             </svg>
         </button>
     </div>
-    <div class="row text-center" id="accomplished">
-            <!--accomplished-->
-            <div class="col-md-6 mt-5">
-                <img src="profile.jpg" alt="" class="reu">
-                <p>JUNNO FINALLY REUNITES MIKE AND HIS PET</p>
-            </div>
-            <div class="col-md-6 mt-5">
-                <img src="profile.jpg" alt="" class="reu">
-                <p>JUNNO FINALLY REUNITES MIKE AND HIS PET</p>
-            </div>
-        </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
 
 $(document).ready(function() {
-
     $('#image').change(function() {
         var file = this.files[0];
         if (file) {
@@ -366,7 +345,6 @@ $(document).ready(function() {
     event.preventDefault(); // Prevent form submission
         container.empty();
     var search = $("#search-input").val();
-
     // Make an AJAX request
     $.ajax({
         url: "search.php",
@@ -406,7 +384,7 @@ $(document).ready(function() {
             }
         });
 
-    var container = $("#dataset");
+    
     var email;
     var urlParams = new URLSearchParams(window.location.search);
     var userId = urlParams.get('user_id'); // Extracting user_id from URL
