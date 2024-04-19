@@ -76,6 +76,12 @@
     padding: 20px;
 }
 
+.reu {
+    height: 300px;
+    border-radius: 20px;
+    object-fit: cover; /* Ensure images cover the area without stretching */
+}
+
 @media (min-width: 576px) {
     .form-control {
         max-width: auto;
