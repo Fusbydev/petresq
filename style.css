@@ -1,0 +1,110 @@
+.navbar-brand {
+    margin-right: auto;
+}
+
+/* Center the input group within the form and limit its width */
+.input-group {
+    width: 100%;
+    max-width: 400px; /* Adjust maximum width as needed */
+    margin: 0 auto; /* Center the input group */
+}
+
+/* Adjust the fixed button at the bottom right corner */
+.fixed-bottom-right {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+/* Style the cards for listings */
+.card {
+    margin: 0 auto; /* Center the card */
+    max-width: 400px; /* Adjust maximum width as needed */
+    margin-bottom: 20px;
+    position: relative;
+    height: 200px;
+}
+
+/* Style the form elements within the card body */
+.card-body input[type="text"] {
+    width: calc(100% - 20px);
+    margin-bottom: 10px;
+}
+
+/* Style the images within the cards */
+.card img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Add some spacing around the title and text within the card */
+.card-title,
+.card-text {
+    margin-bottom: 10px;
+}
+
+/* Style the primary button */
+.btn-primary {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+/* Center the modal dialog and set a maximum width */
+.modal-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    max-width: 600px; /* Adjust maximum width as needed */
+}
+
+/* Ensure the modal content does not exceed the width of the viewport */
+.modal-content {
+    width: 100%;
+    max-width: 100%; /* Use 100% to prevent horizontal scrolling */
+}
+
+/* Center the content within the modal */
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Style for the 'accomplished' section */
+#accomplished {
+    background-color: rgb(198, 195, 195);
+    padding: 20px 0; /* Add padding to the top and bottom */
+}
+
+.reu {
+    height: 300px;
+    border-radius: 20px;
+    object-fit: cover; /* Ensure images cover the area without stretching */
+}
+
+/* Responsive adjustments for screens wider than 576px */
+@media (min-width: 576px) {
+    .input-group {
+        max-width: none; /* Remove the max-width constraint on larger screens */
+    }
+    
+    .card {
+        max-width: none; /* Remove the max-width constraint on larger screens */
+    }
+    
+    body {
+        overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+}
+
+/* Responsive adjustments for screens wider than 992px */
+@media (min-width: 992px) {
+    .modal-content {
+        max-width: 600px; /* Set a specific max-width for larger screens */
+    }
+}

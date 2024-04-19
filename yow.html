@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magnifying Glass</title>
+<style>
+.image-container {
+    position: relative;
+    display: inline-block;
+    margin-top: 25%;
+    margin-left: 25%;
+}
+
+.magnifying-glass {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    border: 2px solid #000;
+    border-radius: 50%;
+    cursor: none;
+    display: none;
+    background-repeat: no-repeat;
+    background-size: 300% 300%;
+}
+
+.magnify-image {
+    max-width: 500px;
+    height: auto;
+}
+</style>
+</head>
+<body>
+
+<div class="image-container">
+    <img src="sample.jpg" alt="Image" class="magnify-image">
+    <div class="magnifying-glass"></div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $(".magnify-image").mousemove(function(event) {
+        var imageOffset = $(this).offset();
+        var offsetX = event.pageX - imageOffset.left;
+        var offsetY = event.pageY - imageOffset.top;
+
+        $(".magnifying-glass").css({
+            left: offsetX - 100,
+            top: offsetY - 100,
+            display: "block",
+            backgroundPosition: (-offsetX * 3) + "px " + (-offsetY * 3) + "px",
+            backgroundImage: "url(" + $(this).attr("src") + ")"
+        });
+    });
+
+    $(".magnify-image").mouseleave(function() {
+        $(".magnifying-glass").hide();
+    });
+});
+</script>
+
+</body>
+</html>

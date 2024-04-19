@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Fjalla+One&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #000000;
+}
+
+.banner {
+    background-image: url('shrek.png'); 
+    background-size: cover;
+    background-position: center;
+    padding: 150px 20px;
+    text-align: center;
+    color: white;
+}
+
+.banner-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    flex-direction: column;
+    padding: 50px 20px;
+    background-color: #000000;
+}
+
+.description1 {
+    font-family: "Fjalla One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: #000000;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    margin: 20px auto;
+}
+
+.description-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.description img {
+    width: 400px;
+    height: 150px;
+}
+
+footer {
+    background: #000000;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+@media only screen and (max-width: 768px) {
+    .description .container .row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .description .container .row .col {
+       max-width:  auto; 
+        max-height: auto; 
+    }
+
+    .description .container .row .col .description-item {
+        margin-bottom: 20px;
+    }
+}
+
+
