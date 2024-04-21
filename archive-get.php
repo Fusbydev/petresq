@@ -4,7 +4,7 @@ require_once "connection.php";
 if(isset($_POST["user_id"])) {
     $user_id = $_POST["user_id"];
 
-    $sql = "SELECT listing.*, CONCAT(account.first_name, ' ', account.last_name) AS name, account.address AS account_address FROM listing 
+    $sql = "SELECT listing.*, CONCAT(account.first_name, ' ', account.last_name) AS name, listing.address AS account_address FROM listing 
                 INNER JOIN account ON listing.lister_id = account.id WHERE listing.lister_id = $user_id";
     $result = mysqli_query($conn, $sql);
 

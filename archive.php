@@ -88,6 +88,11 @@ mysqli_close($conn);
         body, h1, h2, h3, h4, h5, h6, p, a, button {
             font-family: "Lilita One", sans-serif;
         }
+        body {
+        background-image: url('background.png');
+        background-size: cover;
+        background-position: center;
+        }
         table {
             border: 1 solid black;
         }

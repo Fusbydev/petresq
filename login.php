@@ -33,24 +33,29 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <title>Login Page</title>
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lilita+One&display=swap');
+        body, h1, h2, h3, h4, h5, h6, p, a, button, label {
+            font-family: "Lilita One", sans-serif;
+        }
 body {
     font-family: sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: url('mainbackground.jpg');
+    background-image: url('background.png');
     background-size: cover;
     background-position: center;
 }
 .login-form {
     width: 400px; /* Increase the width of the form */
     padding: 40px; /* Increase the padding for more spacing */
-    background-color: lightblue;
-    border-radius: 5px;
+    background-color: #3C62D1;
+    border-radius: 50px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    height: 400px;
+    border: 1px solid black;
 }
-
 
 .login-form label {
     display: block;
@@ -74,27 +79,38 @@ body {
     border: none;
     border-radius: 3px;
     cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .register-button {
     display: block;
     text-align: center;
     margin-top: 10px;
-    color: #4CAF50;
+    color: black;
     text-decoration: none;
 }
 
 .logo img {
-    height: 400px;
-    width: 300px;
-    margin-left: 50px;
+    width: 500px; /* Make the image responsive */
+    display: block; /* Ensure the image is centered */
+    margin: 0 auto; /* Center the image horizontally */
+    
+}
+a {
+    color: black;
+}
+input {
+    background-color:transparent;
+    border: 1px solid black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="container mt-5">
     <div class="row">
-        <div class="col-md-6 d-flex justify-content-center"> <!-- Added d-flex justify-content-center class -->
+        <h1 class="text-center">PET FUCKING FINDER</h1>
+        <div class="col-md-6 d-flex justify-content-center mt-5"> <!-- Added d-flex justify-content-center class -->
             <div class="login-form">
                 <h1><center>Login</center></h1>
                 <form action="" method="post">
@@ -104,19 +120,19 @@ body {
                     <input type="password" id="password" name="password" required>
                     <button type="submit">Login</button>
                 </form>
-                <a href="registration.php" class="register-button">Don't have an account? Register Here</a>
+                <p class="register-button">don't have an account? <a href="registration.php">click here</a></p>
             </div>
         </div>
-        <div class="col-md-6 text-center pic">
+        <div class="col-md-6 pic">
             <div class="logo">
-                <img src="mainlogo.png" alt="Petfinder-logo">
+                <img src="logolog.png" alt="Petfinder-logo">
             </div>
         </div>
     </div>
 </div>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
 </html>
+

@@ -95,6 +95,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <script src="script.js"></script>
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lilita+One&display=swap');
@@ -103,6 +104,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         body {
             overflow-x: hidden;
+            background-image: url('background.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .container{
+            
         }
 
         .card {
@@ -154,6 +161,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 .mt-2 {
     margin-left:15px;
 }
+#search-input {
+    border: 1px solid black;
+    
+}
+#search {
+    border: 1px solid black;
+    font-weight: bold;
+}
+.container1 {
+    background-color: black;
+    width: 100%;
+    height:100vh;
+}
+
     </style>
     </head>
     <body>
@@ -202,9 +223,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 </form>
         </div>
     </div>
+    <div id="pagination-container" class="d-flex justify-content-center mt-3">
         <div class="row" id="dataset">
             <!---dataset-->
         </div>
+</div>
+        
         <!-- Modal -->
         <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -314,6 +338,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </div>
+<section>
+            <div class="container1">
+
+            </div>
+        </section>
 
     <div class="fixed-bottom-right">
         <button class="btn btn-primary btn-lg rounded-circle" onclick="addListing()">
@@ -328,6 +357,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <script>
 
 $(document).ready(function() {
+    var container = $("#dataset");
     $('#image').change(function() {
         var file = this.files[0];
         if (file) {
@@ -534,7 +564,7 @@ function listing(id, image, name, description, address, email, lastSeen, lost, d
                         <img src="assets-pic/${image}" class="img-fluid mx-auto d-block" alt="${name}" style="width: 300px; height:160px;" onclick="viewListLost('${id}', '${image}', '${name}', '${description}','${address}', '${email}', '${lastSeen}')">
                         <div class="overlay" onclick="viewListLost('${id}', '${image}', '${name}', '${description}','${address}', '${email}', '${lastSeen}')">
                             <div class="content">
-                                <p>tap image for more info...</p>
+                                <p>tap image for more info and actions...</p>
                             </div>
                         </div>
                     </div>
@@ -543,12 +573,15 @@ function listing(id, image, name, description, address, email, lastSeen, lost, d
                     <div class="name-cont">
                     <img src="profile-pix/${profile}" alt="${name}" class="pfp" style="width: 40px; border-radius: 20px; margin-right:10px;">
                         <h4>${name}</h4>
-                    </div>
+                    </div class="row">
                         <p>Description: ${truncatedDescription}</p>
                         <p>Address: ${address}</p>
                         <p>Last Seen: ${lastSeen}</p>
                         <p style="opacity:0.5;">${date}</p>
-                        <button class="btn btn-primary btn-sm position-absolute bottom-0 end-0 mb-2 me-2" onclick="openModal('${email}')">Message</button>
+                        <button class="btn btn-warning btn-sm position-absolute bottom-0 start-0 mb-2 me-2" onclick="startTextToSpeech('${name}', '${description}','${address}')">
+                            <i class="fas fa-volume-up"></i>
+                            </button>
+                            <button class="btn btn-primary btn-sm position-absolute bottom-0 end-0 mb-2 me-2" onclick="openModal('${email}')">Message</button>
                     </div>
                 </div>
             </div>
@@ -564,7 +597,7 @@ function listing(id, image, name, description, address, email, lastSeen, lost, d
                         <img src="assets-pic/${image}" class="img-fluid mx-auto d-block" alt="${name}" style="width: 300px; height:160px;" onclick="viewListLost('${id}', '${image}', '${name}', '${description}','${address}', '${email}')">
                         <div class="overlay" onclick="viewListLost('${id}', '${image}', '${name}', '${description}','${address}', '${email}')">
                             <div class="content">
-                                <p>tap image for more info...</p>
+                                <p>tap image for more info and actions...</p>
                             </div>
                         </div>
                     </div>
@@ -579,12 +612,31 @@ function listing(id, image, name, description, address, email, lastSeen, lost, d
                         <p>Address: ${address}</p>
                         <p style="opacity:0.5;">${date}</p>
                         <button class="btn btn-primary btn-sm position-absolute bottom-0 end-0 mb-2 me-2" onclick="openModal('${email}')">Message</button>
+                        <button class="btn btn-warning btn-sm bottom-0 end-0 mb-2 me-2 speak" onclick="startTextToSpeech('${name}', '${description}','${address}')">
+    <i class="fas fa-volume-up"></i>
+</button>
                     </div>
                 </div>
             </div>
         </div>`;
         container.append(cardHtml);
     }
+}
+
+function startTextToSpeech(name, description, address) {
+    
+    if ('speechSynthesis' in window) {
+            const textToRead = "This pet is " + description + ", and found by " + name + ", at the address " + address + ".";
+            // Create a new SpeechSynthesisUtterance object
+            const message = new SpeechSynthesisUtterance(textToRead);
+
+            // Speak the text
+            window.speechSynthesis.speak(message);
+    } else {
+        // If the browser doesn't support the Web Speech API
+        alert('Sorry, your browser does not support text-to-speech functionality.');
+    }
+    console.log(description)
 }
 
     </script>

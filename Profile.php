@@ -11,6 +11,11 @@
         body, h1, h2, h3, h4, h5, h6, p, a, button {
             font-family: "Lilita One", sans-serif;
         }
+        body {
+          background-image: url('background.png');
+          background-size: cover;
+          background-position: center;
+        }
   </style>
 </head>
 <body>
@@ -63,7 +68,7 @@
         </div>
         <div class="row">
           <div class="col-md-6 text-center"> <!-- Centering the buttons -->
-            <button class="btn btn-secondary btn-block mb-2" id="archive">ARCHIVE</button>
+            <button class="btn btn-secondary btn-block mb-2" id="archive">MY LISTING</button>
           </div>
         </div>
         <div class="row">
@@ -73,7 +78,7 @@
         </div>
       </div>
       <div class="col-md-4 text-center">
-        <img src="mainlogo.png" alt="Logo" class="img-fluid mt-4 mx-auto d-block">
+        <img src="logolog.png" alt="Logo" class="img-fluid mt-4 mx-auto d-block">
       </div>
     </div>
   </div>

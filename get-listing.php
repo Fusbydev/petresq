@@ -9,17 +9,17 @@ if (!$conn) {
 if(isset($_GET['filter'])) {
     $filter = $_GET['filter'];
     if($filter == "lost") {
-        $sql = "SELECT listing.*, CONCAT(account.first_name, ' ', account.last_name) AS name, account.email, account.address, account.profile FROM listing 
+        $sql = "SELECT listing.*, CONCAT(account.first_name, ' ', account.last_name) AS name, account.email, listing.address, account.profile FROM listing 
                 INNER JOIN account ON listing.lister_id = account.id WHERE listing.lost = 1";
     } elseif($filter == "found") {
-        $sql = "SELECT listing.*, CONCAT(account.first_name, ' ', account.last_name) AS name, account.email, account.address, account.profile FROM listing 
+        $sql = "SELECT listing.*, CONCAT(account.first_name, ' ', account.last_name) AS name, account.email, listing.address, account.profile FROM listing 
                 INNER JOIN account ON listing.lister_id = account.id WHERE listing.lost = 0";
     } else {
-        $sql = "SELECT listing.*, CONCAT(account.first_name, ' ', account.last_name) AS name, account.email, account.address, account.profile FROM listing 
+        $sql = "SELECT listing.*, CONCAT(account.first_name, ' ', account.last_name) AS name, account.email, listing.address, account.profile FROM listing 
                 INNER JOIN account ON listing.lister_id = account.id";
     }
 } else {
-    $sql = "SELECT listing.*, CONCAT(account.first_name, ' ', account.last_name) AS name, account.email, account.address, account.profile FROM listing 
+    $sql = "SELECT listing.*, CONCAT(account.first_name, ' ', account.last_name) AS name, account.email, listing.address, account.profile FROM listing 
             INNER JOIN account ON listing.lister_id = account.id";
 }
 
