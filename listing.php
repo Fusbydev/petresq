@@ -59,7 +59,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $error = $_FILES['image']['error'];
 
             if($error === 0) {
-                if($image_size > 50000) {
+                if($image_size < 0) {
                     echo "<script>alert('File size too big')</script>";
                 } else {
                     $image_ex = strtolower(pathinfo($image_name, PATHINFO_EXTENSION));
@@ -81,6 +81,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo"error occurred";
             }
         }
+    }
+    //submit post
+    if(isset($_POST["post"])){
+        $lister_id = filter_input(INPUT_POST, "lister_id");
+        $item_id = filter_input(INPUT_POST, "item_id");
+        $desc = filter_input(INPUT_POST, "descriptionPost");
+        $image = "IMG-661a972b3f8675.73217380.jpg";
+
+        $sql = "INSERT INTO waiting (listing_id, item_id, description, image, name) VALUES ('$lister_id', '$item_id', '$desc', '$image', '$name')";
+        header("Location: ".$_SERVER['REQUEST_URI']);   
+    if(mysqli_query($conn, $sql)){
+        echo "<script>alert('post uploaded, wait for approval')</script>";
+    } else{
+        echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+    }
     }
 }
 ?>
@@ -107,9 +122,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             background-image: url('background.png');
             background-size: cover;
             background-position: center;
-        }
-        .container{
-            
         }
 
         .card {
@@ -170,11 +182,37 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     font-weight: bold;
 }
 .container1 {
-    background-color: black;
+    background-color: #1679AB;
     width: 100%;
-    height:100vh;
+    height:auto;
 }
+.addimage {
+      width: fit-content;
+      border-radius: 20px;
+      padding: 10px;
+      background-color: #e0e0e0;
+      display: inline-block;
+      height: 45px;
+    }
 
+    .addimage input[type="file"] {
+      display: none;
+      width: 10px;
+    }
+
+    .addimage label {
+      background-size: cover;
+      cursor: pointer;
+    }
+    .la{
+        color: white;
+
+    }
+    .containerCard{
+        width: 350px;
+        margin: auto;
+    }
+    
     </style>
     </head>
     <body>
@@ -195,6 +233,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     <li class="nav-item">
                         <a class="nav-link" href="#" id="profile">Profile</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#feed" id="profile">Accomplished</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -202,7 +243,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="container mt-3">
     <div class="container mt-3">
-    <div class="row">
+    <div class="row d-flex">
         <div class="col-md-8 text-center">
                 <form class="d-flex mb-3" id="form-search">
                     <div class="input-group" style="margin-left:200px;">
@@ -224,7 +265,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
     <div id="pagination-container" class="d-flex justify-content-center mt-3">
-        <div class="row" id="dataset">
+        <div class="row justify-content-center" id="dataset">
             <!---dataset-->
         </div>
 </div>
@@ -338,11 +379,45 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </div>
-<section>
-            <div class="container1">
+<div id="postModal" class="modal" tabindex="-1" aria-labelledby="viewlistSeen" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create Post</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <form method="post" enctype="multipart/form-data" action="#">
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="descriptionPost" name="descriptionPost" class="form-control" rows="4" cols="50"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="image">Image:</label>
+            <div class="addimage">
+              <input type="file" id="imagePost" name="image">
+              <label for="image"><i class="fa fa-camera"></i></label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" id="submitPost" name="post">Post</button>
+          <input type="text" name="lister_id" hidden value="" id="listerPost">
+          <input type="text" name="item_id" hidden value="" id="itemPost">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<section id="feed">
+    <div class="container1">
+        <div class="container mt-5">
+            <div class="row waiting-container">
+                <h1 class="la mt-5">accomplished and user feedback</h1>
 
             </div>
-        </section>
+        </div>
+    </div>
+</section>
+
 
     <div class="fixed-bottom-right">
         <button class="btn btn-primary btn-lg rounded-circle" onclick="addListing()">
@@ -357,6 +432,37 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <script>
 
 $(document).ready(function() {
+
+    $.ajax({
+            url: "accomplished.php",
+            method: "GET",
+            dataType: "json",
+            success: function(data) {
+                $.each(data, function(index, item) {
+                    var cardHtml = `<div class="col-md-4 mb-4">
+                                <div class="card mt-5">
+                                    <div class="card-body text-center">
+                                        <div class="profile-image mb-4">
+                                            <img src="profile.jpg" alt="Profile Image" class="img-fluid" style="width: 200px;">
+                                        </div>
+                                        
+                                        <h5 class="card-title">${item.name}</h5>
+                                        <p class="card-text">${item.description}</p>
+                                        
+                                        
+                                        <div class="footer">
+                                            <!-- Add content or buttons here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+            $(".waiting-container").append(cardHtml);
+                });
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
     var container = $("#dataset");
     $('#image').change(function() {
         var file = this.files[0];
@@ -383,7 +489,7 @@ $(document).ready(function() {
         dataType: "json",
         success: function(data) {
     $.each(data, function(index, item) {
-        listing(item.id, item.image, item.name, item.description, item.address, item.email, item.last_seen, item.lost, item.date, item.profile);
+        listing(item.id, item.image, item.name, item.description, item.address, item.email, item.last_seen, item.lost, item.date, item.profile, item.lister_id);
     });
 },
     error: function(data) {
@@ -428,7 +534,7 @@ $(document).ready(function() {
             data: { filter: filter }, // Pass the filter parameter to the PHP script
             success: function(data) {
                 $.each(data, function(index, item) {
-                    listing(item.id, item.image, item.name, item.description, item.address, item.email, item.last_seen, item.lost, item.date, item.profile);
+                    listing(item.id, item.image, item.name, item.description, item.address, item.email, item.last_seen, item.lost, item.date, item.profileite, item.lister_id);
                 });
             },
             error: function(data) {
@@ -459,7 +565,7 @@ $(document).ready(function() {
 
     success: function(data) {
     $.each(data, function(index, item) {
-        listing(item.id, item.image, item.name, item.description, item.address, item.email, item.last_seen, item.lost, item.date, item.profile);
+        listing(item.id, item.image, item.name, item.description, item.address, item.email, item.last_seen, item.lost, item.date, item.profile, item.lister_id);
     });
 },
     error: function(data) {
@@ -518,6 +624,19 @@ function addListing() {
     listingModal.show();
 }
 
+function openPostModal(lister_id, id) {
+    console.log(lister_id);
+    $("#listerPost").val(lister_id);
+        $("#itemPost").val(id);
+    var postModal = new bootstrap.Modal(document.getElementById('postModal'), {
+        //$("#listerPost").val(lister_id);
+        //$("#itemPost").val(id);
+        
+        keyboard: false
+    });
+    postModal.show();
+}
+
 function viewListLost(id, image, name, description, address, email, lastseen) {
 console.log(id);
     var viewlistLost = document.getElementById('viewlistLost').querySelector('.modal-dialog');
@@ -551,13 +670,13 @@ function viewListSeen(id, image, name, description, address, email) {
     listingModal.show();
     console.log(id);
 }
-function listing(id, image, name, description, address, email, lastSeen, lost, date, profile) {
+function listing(id, image, name, description, address, email, lastSeen, lost, date, profile, lister_id) {
     console.log(profile);
     var container = $("#dataset");
     if (lost == 1) {
         var truncatedDescription = description.length > 100 ? description.substring(0, 50) + '...' : description;
         var cardHtml = `
-        <div class="col-md-4">
+        <div class="col-md-4 containerCard">
             <div class="card position-relative">
                 <div class="card-body" style="padding: 10px;">
                     <div class="img-con">
@@ -581,6 +700,7 @@ function listing(id, image, name, description, address, email, lastSeen, lost, d
                         <button class="btn btn-warning btn-sm position-absolute bottom-0 start-0 mb-2 me-2" onclick="startTextToSpeech('${name}', '${description}','${address}')">
                             <i class="fas fa-volume-up"></i>
                             </button>
+                            <button class="btn btn-warning btn-sm position-absolute bottom-0 start-5 mb-2 me-2" onclick="openPostModal('${lister_id}','${id}')">create post</button>
                             <button class="btn btn-primary btn-sm position-absolute bottom-0 end-0 mb-2 me-2" onclick="openModal('${email}')">Message</button>
                     </div>
                 </div>
@@ -590,7 +710,7 @@ function listing(id, image, name, description, address, email, lastSeen, lost, d
     } else if (lost == 0) {
         var truncatedDescription = description.length > 100 ? description.substring(0, 50) + '...' : description;
         var cardHtml = `
-        <div class="col-md-4">
+        <div class="col-md-4 containerCard">
             <div class="card position-relative">
                 <div class="card-body" style="padding: 10px;">
                     <div class="img-con">
@@ -611,9 +731,12 @@ function listing(id, image, name, description, address, email, lastSeen, lost, d
                         <p>Description: ${truncatedDescription}</p>
                         <p>Address: ${address}</p>
                         <p style="opacity:0.5;">${date}</p>
-                        <button class="btn btn-primary btn-sm position-absolute bottom-0 end-0 mb-2 me-2" onclick="openModal('${email}')">Message</button>
-                        <button class="btn btn-warning btn-sm bottom-0 end-0 mb-2 me-2 speak" onclick="startTextToSpeech('${name}', '${description}','${address}')">
-    <i class="fas fa-volume-up"></i>
+                        
+                        <button class="btn btn-warning btn-sm position-absolute bottom-0 start-0 mb-2 me-2" onclick="startTextToSpeech('${name}', '${description}','${address}')">
+                            <i class="fas fa-volume-up"></i>
+                            </button>
+                            <button class="btn btn-warning btn-sm position-absolute bottom-0 start-5 mb-2 me-2" onclick="openPostModal('${lister_id}','${id}')">create post</button>                                            
+    <button class="btn btn-primary btn-sm position-absolute bottom-0 end-0 mb-2 me-2" onclick="openModal('${email}')">Message</button>
 </button>
                     </div>
                 </div>

@@ -1,79 +1,3 @@
-<?php
-require_once "connection.php";
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST["formname"];
-    $description = $_POST["formdesc"];
-    $address = $_POST["formadd"];
-    $lastSeen = $_POST["formlastseen"];
-    $itemId = $_POST["formid"];
-
-    // Check if the file has been uploaded
-    // Check if the file has been uploaded
-if (isset($_FILES['image'])) {
-    $image_name = $_FILES['image']['name'];
-    $image_size = $_FILES['image']['size'];
-    $image_temp = $_FILES['image']['tmp_name'];
-    $error = $_FILES['image']['error'];
-
-    $allowed_ex = array("png", "jpg", "jpeg"); // Define allowed file extensions
-
-    if ($error === 0) {
-        $image_ex = strtolower(pathinfo($image_name, PATHINFO_EXTENSION)); // Get the file extension
-
-        // Check if the file type is allowed
-        if (in_array($image_ex, $allowed_ex)) {
-            // Generate a unique name for the uploaded file
-            $new_image_name = uniqid("IMG-", true) . '.' . $image_ex;
-
-            // Move the uploaded file to the desired location
-            if (move_uploaded_file($image_temp, 'assets-pic/' . $new_image_name)) {
-                // Construct the SQL query with the new image name
-                if (strlen($lastSeen) > 0) {
-                    $sql = "UPDATE listing SET name='$name', image = '$new_image_name', description='$description', address='$address', last_seen='$lastSeen', lost = 1 WHERE id='$itemId'";
-                } else {
-                    $sql = "UPDATE listing SET name='$name', image = '$new_image_name', description='$description', address='$address', last_seen='$lastSeen', lost = 0 WHERE id='$itemId'";
-                }
-
-                // Execute the query
-                if (mysqli_query($conn, $sql)) {
-                    // Redirect to prevent form resubmission
-                    header("Location: " . $_SERVER['REQUEST_URI']);
-                    exit();
-                } else {
-                    echo "Error updating record: " . mysqli_error($conn);
-                }
-            } else {
-                echo "Error moving uploaded file";
-            }
-        } else {
-            echo "<script>alert('Cannot accept file type')</script>";
-        }
-    } else {
-        if (strlen($lastSeen) > 0) {
-            $sql = "UPDATE listing SET name='$name', description='$description', address='$address', last_seen='$lastSeen', lost = 1 WHERE id='$itemId'";
-        } else {
-            $sql = "UPDATE listing SET name='$name', description='$description', address='$address', last_seen='$lastSeen', lost = 0 WHERE id='$itemId'";
-        }
-
-        mysqli_query($conn, $sql);
-    }
-    } else {
-        if (strlen($lastSeen) > 0) {
-            $sql = "UPDATE listing SET name='$name', description='$description', address='$address', last_seen='$lastSeen', lost = 1 WHERE id='$itemId'";
-        } else {
-            $sql = "UPDATE listing SET name='$name', description='$description', address='$address', last_seen='$lastSeen', lost = 0 WHERE id='$itemId'";
-        }
-
-        mysqli_query($conn, $sql);
-    }
-}
-
-// Close the database connection
-mysqli_close($conn);
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -101,6 +25,15 @@ mysqli_close($conn);
             max-width: 100px; /* Adjust the maximum width of the image */
             height: auto; /* Maintain aspect ratio */
         }
+        ol .breadcrumb-item a{
+            color: black;
+            font-size: 20px;
+        }
+        .container-accept,
+        .container-bookmark{
+            height: auto; /* Set height to auto */
+            width: auto; /* Set width to auto */
+        }
     </style>
 </head>
 <body>
@@ -125,6 +58,21 @@ mysqli_close($conn);
         </div>
     </div>
 </nav>
+<div class="d-flex justify-content-end me-3">
+<nav aria-label="breadcrumb">
+</nav>
+
+<nav aria-label="breadcrumb">
+</nav>
+
+<nav aria-label="breadcrumb">
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">MY LISTING</a></li>
+    <li class="breadcrumb-item"><a href="#accept-post">ACCEPT POST</a></li>
+    <li class="breadcrumb-item"><a href="#bookmark">BOOKMARK</a></li>
+</ol>
+</nav>
+</div>
 
     <div class="container-fluid con">
     <div class="table-responsive">
@@ -143,6 +91,25 @@ mysqli_close($conn);
     </table>
     </div>
     </div>
+
+    <section class="accept" id="accept-post">
+    <div class="container-accept">
+        <h1>accept container</h1>
+        <div class="container mt-5">
+        <div class="row justify-content-center waiting-container">
+            
+        </div>
+    </div>
+    </div>
+    </section>
+
+    <section class="bookmark" id="bookmark">
+    <div class="container-bookmark">
+        <h2>bookmark Section</h2>
+        <p>This is the bookmark section content.</p>
+    </div>
+    </section>
+
 
     <div class="modal fade" id="viewlistLost" tabindex="-1" aria-labelledby="viewlistLost" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -174,6 +141,38 @@ mysqli_close($conn);
 </div>
 <script>
     $(document).ready(function() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var userId = urlParams.get('user_id'); // Extracting user_id from URL
+        $.ajax({
+            url: "get-waiting.php",
+            method: "GET",
+            dataType: "json",
+            data: {user_id: userId},
+            success: function(data) {
+                var body = ""; // Define body variable
+                $.each(data, function(index, item){
+                    body += `<div class="col-md-4 mb-4"> <!-- Adjusted column width -->
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="profile-image mb-4">
+                            <img src="profile.jpg" alt="Profile Image" class="img-fluid" style="width: 200px;">
+                        </div>
+                        <h5 class="card-title">${item.name}</h5>
+                        <p class="card-text">${item.description}</p>
+                        <div class="footer">
+                            <a class="btn btn-success me-2" href="accept.php?insert_id=${item.id}&listing_id=${item.listing_id}">Accept</a>
+                            <a class="btn btn-danger" name="deletePost" href="delete-request.php?deletePost=${item.id}&listing_id=${item.listing_id}">Reject</a>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+                });
+                $(".waiting-container").append(body);
+                
+            }
+        });
+
+
         $('.img-edit').change(function() {
         var file = this.files[0];
         if (file) {
@@ -187,9 +186,6 @@ mysqli_close($conn);
         }
     });
 
-
-        var urlParams = new URLSearchParams(window.location.search);
-        var userId = urlParams.get('user_id'); // Extracting user_id from URL
         $.ajax({
             url: "archive-get.php",
             type: "post",
