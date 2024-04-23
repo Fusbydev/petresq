@@ -109,7 +109,7 @@ input {
 <body>
 <div class="container mt-5">
     <div class="row">
-        <h1 class="text-center">PET FUCKING FINDER</h1>
+        <h1 class="text-center">PET FINDR.</h1>
         <div class="col-md-6 d-flex justify-content-center mt-5"> <!-- Added d-flex justify-content-center class -->
             <div class="login-form">
                 <h1><center>Login</center></h1>

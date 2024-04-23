@@ -107,6 +107,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Bootstrap demo</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js "></script>
+        <link rel="stylesheet" href="magnify.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -212,7 +214,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         width: 350px;
         margin: auto;
     }
-    
+    .view {
+        height: 25px;
+        font-size: 12px;
+        margin-left: 5px;
+    }
     </style>
     </head>
     <body>
@@ -257,7 +263,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="radio" name="lostFound" id="lost" autocomplete="off"> Lost
                         </label>
                         <label class="btn btn-outline-dark">
-                            <input type="radio" name="lostFound" id="found" autocomplete="off"> Found
+                            <input type="radio" name="lostFound" id="found" autocomplete="off"> Seen
                         </label>
                     </div>
                     </div>
@@ -428,37 +434,44 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="jquery.magnify.js"></script>
     <script>
 
 $(document).ready(function() {
-
     $.ajax({
             url: "accomplished.php",
             method: "GET",
             dataType: "json",
             success: function(data) {
-                $.each(data, function(index, item) {
-                    var cardHtml = `<div class="col-md-4 mb-4">
-                                <div class="card mt-5">
-                                    <div class="card-body text-center">
-                                        <div class="profile-image mb-4">
-                                            <img src="profile.jpg" alt="Profile Image" class="img-fluid" style="width: 200px;">
-                                        </div>
-                                        
-                                        <h5 class="card-title">${item.name}</h5>
-                                        <p class="card-text">${item.description}</p>
-                                        
-                                        
-                                        <div class="footer">
-                                            <!-- Add content or buttons here -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>`;
-            $(".waiting-container").append(cardHtml);
-                });
-            },
+    $.each(data, function(index, item) {
+        var cardHtml = `<div class="col-md-4 mb-4">
+            <div class="card mt-5">
+                <div class="card-body text-center">
+                    <div class="profile-image mb-4">
+                        <img src="assets-pic/${item.image}" alt="Profile Image" class="img-fluid zoom" style="width: 200px;">
+                    </div>
+                    <h5 class="card-title">${item.name}</h5>
+                    <p class="card-text">${item.description}</p>
+                    <div class="footer">
+                        <!-- Add content or buttons here -->
+                    </div>
+                </div>
+            </div>
+        </div>`;
+        $(".waiting-container").append(cardHtml);
+    });
+
+    // Loop through each .zoom element and set its attributes dynamically
+    $('.zoom').each(function() {
+        var imagePath = $(this).attr("src"); // Get the current image path
+        $(this).attr("src", imagePath); // Update the src attribute
+        $(this).attr("data-magnify-src", imagePath); // Update the data-magnify-src attribute
+    });
+
+    // Initialize magnify on .zoom elements
+    $('.zoom').magnify();
+},
+
             error: function(data) {
                 console.log(data);
             }
@@ -534,7 +547,7 @@ $(document).ready(function() {
             data: { filter: filter }, // Pass the filter parameter to the PHP script
             success: function(data) {
                 $.each(data, function(index, item) {
-                    listing(item.id, item.image, item.name, item.description, item.address, item.email, item.last_seen, item.lost, item.date, item.profileite, item.lister_id);
+                    listing(item.id, item.image, item.name, item.description, item.address, item.email, item.last_seen, item.lost, item.date, item.profile, item.lister_id);
                 });
             },
             error: function(data) {
@@ -680,19 +693,16 @@ function listing(id, image, name, description, address, email, lastSeen, lost, d
             <div class="card position-relative">
                 <div class="card-body" style="padding: 10px;">
                     <div class="img-con">
-                        <img src="assets-pic/${image}" class="img-fluid mx-auto d-block" alt="${name}" style="width: 300px; height:160px;" onclick="viewListLost('${id}', '${image}', '${name}', '${description}','${address}', '${email}', '${lastSeen}')">
-                        <div class="overlay" onclick="viewListLost('${id}', '${image}', '${name}', '${description}','${address}', '${email}', '${lastSeen}')">
-                            <div class="content">
-                                <p>tap image for more info and actions...</p>
-                            </div>
-                        </div>
+                        <img src="assets-pic/${image}" class="img-fluid mx-auto d-block zoom" alt="${name}" style="width: 300px; height:160px;">
                     </div>
-                
                     <div class="mt-2">
                     <div class="name-cont">
                     <img src="profile-pix/${profile}" alt="${name}" class="pfp" style="width: 40px; border-radius: 20px; margin-right:10px;">
                         <h4>${name}</h4>
-                    </div class="row">
+                        <button class="btn btn-info btn-sm ml-2 view" onclick="viewListLost('${id}', '${image}', '${name}', '${description}','${address}', '${email}', '${lastSeen}')">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    </div>
                         <p>Description: ${truncatedDescription}</p>
                         <p>Address: ${address}</p>
                         <p>Last Seen: ${lastSeen}</p>
@@ -707,25 +717,24 @@ function listing(id, image, name, description, address, email, lastSeen, lost, d
             </div>
         </div>`;
         container.append(cardHtml);
-    } else if (lost == 0) {
+    }
+    else if (lost == 0) {
         var truncatedDescription = description.length > 100 ? description.substring(0, 50) + '...' : description;
         var cardHtml = `
         <div class="col-md-4 containerCard">
             <div class="card position-relative">
                 <div class="card-body" style="padding: 10px;">
                     <div class="img-con">
-                        <img src="assets-pic/${image}" class="img-fluid mx-auto d-block" alt="${name}" style="width: 300px; height:160px;" onclick="viewListLost('${id}', '${image}', '${name}', '${description}','${address}', '${email}')">
-                        <div class="overlay" onclick="viewListLost('${id}', '${image}', '${name}', '${description}','${address}', '${email}')">
-                            <div class="content">
-                                <p>tap image for more info and actions...</p>
-                            </div>
-                        </div>
+                        <img src="assets-pic/${image}" class="img-fluid mx-auto d-block zoom" alt="${name}" style="width: 300px; height:160px;">
                     </div>
         
                     <div class="mt-2">
                     <div class="name-cont">
                     <img src="profile-pix/${profile}" alt="${name}" class="pfp" style=" width: 40px; border-radius: 20px; margin-right:10px;">
                         <h4>${name}</h4>
+                        <button class="btn btn-info btn-sm ml-2 view" onclick="viewListLost('${id}', '${image}', '${name}', '${description}','${address}', '${email}', '${lastSeen}')">
+                        <i class="fas fa-eye"></i>
+                    </button>
                     </div>
                         
                         <p>Description: ${truncatedDescription}</p>
@@ -744,6 +753,14 @@ function listing(id, image, name, description, address, email, lastSeen, lost, d
         </div>`;
         container.append(cardHtml);
     }
+    $('.zoom').each(function() {   
+        var imagePath = $(this).attr("src"); // Get the current image path
+        $(this).attr("src", imagePath); // Update the src attribute
+        $(this).attr("data-magnify-src", imagePath); // Update the data-magnify-src attribute
+    });
+
+    // Initialize magnify on .zoom elements
+    $('.zoom').magnify();
 }
 
 function startTextToSpeech(name, description, address) {

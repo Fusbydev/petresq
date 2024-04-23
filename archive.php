@@ -69,7 +69,6 @@
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">MY LISTING</a></li>
     <li class="breadcrumb-item"><a href="#accept-post">ACCEPT POST</a></li>
-    <li class="breadcrumb-item"><a href="#bookmark">BOOKMARK</a></li>
 </ol>
 </nav>
 </div>
@@ -100,13 +99,6 @@
             
         </div>
     </div>
-    </div>
-    </section>
-
-    <section class="bookmark" id="bookmark">
-    <div class="container-bookmark">
-        <h2>bookmark Section</h2>
-        <p>This is the bookmark section content.</p>
     </div>
     </section>
 

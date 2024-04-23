@@ -6,6 +6,7 @@
   <title>Profile</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="Profilestyle.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lilita+One&display=swap');
         body, h1, h2, h3, h4, h5, h6, p, a, button {
@@ -63,17 +64,17 @@
         </div>
         <div class="row mt-4">
           <div class="col-md-6 text-center"> <!-- Centering the buttons -->
-            <button class="btn btn-primary btn-block mb-2" id="edit">EDIT PROFILE</button>
+            <button class="btn btn-primary btn-block mb-2" id="edit">EDIT PROFILE <i class="bi bi-pencil"></i></button>
           </div>
         </div>
         <div class="row">
           <div class="col-md-6 text-center"> <!-- Centering the buttons -->
-            <button class="btn btn-secondary btn-block mb-2" id="archive">MY LISTING</button>
+            <button class="btn btn-secondary btn-block mb-2" id="archive">MY LISTING <i class="bi bi-envelope-paper"></i></button>
           </div>
         </div>
         <div class="row">
           <div class="col-md-6 text-center"> <!-- Centering the buttons -->
-            <button class="btn btn-danger btn-block" id="log-out">LOG OUT</button>
+            <button class="btn btn-danger btn-block" id="log-out">LOG OUT <i class="bi bi-box-arrow-right start-0"></i></button>
           </div>
         </div>
       </div>

@@ -4,7 +4,6 @@ body {
     margin: 0;
     padding: 0;
     text-align: center;
-
         background-image: url('background.png');
         background-size: cover;
         background-position: center;
@@ -32,14 +31,12 @@ body {
     gap: 20px;
     flex-direction: column;
     padding: 50px 20px;
-    background-color: #000000;
 }
 
 .description1 {
     font-family: "Fjalla One", sans-serif;
     font-weight: 400;
     font-style: normal;
-    background-color: #000000;
     text-align: center;
     color: rgb(255, 255, 255);
     margin: 20px auto;
@@ -65,6 +62,23 @@ footer {
     padding: 10px 0;
 }
 
+.footer-bg {
+    background-color: #000000;
+    color: white;
+    padding: 15px 0;
+  }
+  
+  .contact-info {
+    margin-right: 20px;
+  }
+  
+  .contact-info p {
+    margin-bottom: 5px;
+    width: 50%;
+  }
+
+
+
 @media only screen and (max-width: 768px) {
     .description .container .row {
         display: flex;
@@ -73,13 +87,17 @@ footer {
     }
 
     .description .container .row .col {
-       max-width:  auto; 
+        max-width:  auto; 
         max-height: auto; 
     }
 
     .description .container .row .col .description-item {
         margin-bottom: 20px;
     }
+    .nav-item {
+        margin-right: auto;
+    }
 }
+
 
 
