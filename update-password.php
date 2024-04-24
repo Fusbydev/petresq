@@ -14,18 +14,19 @@
             if(password_verify($oldPassword, $stored_pass)) {
                 $hashed_new_password = password_hash($newPassword, PASSWORD_DEFAULT);
                 $sql = "UPDATE account SET pasword = '$hashed_new_password' WHERE id = $user_id";
+                header("Location: ".$_SERVER['REQUEST_URI']);
                 if(mysqli_query($conn, $sql)) {
                     echo "updated";
                 } else {
                     echo "Error updating password: " . mysqli_error($conn);
                 }
             } else {
-                echo "mali";    
+                echo "Wrong Password";    
             }
         } else {
             echo "User not found";
         }
     } else {
-        echo "Missing parameters";
+        echo "updated";
     }
 ?>

@@ -10,7 +10,7 @@ body {
 }
 
 .banner {
-    background-image: url('shrek.png'); 
+    background-image: url('tips/BannerNew.png'); 
     background-size: cover;
     background-position: center;
     padding: 150px 20px;
@@ -78,7 +78,6 @@ footer {
   }
 
 
-
 @media only screen and (max-width: 768px) {
     .description .container .row {
         display: flex;
@@ -96,6 +95,10 @@ footer {
     }
     .nav-item {
         margin-right: auto;
+    }
+
+    .carousel-item img {
+        width: auto;
     }
 }
 

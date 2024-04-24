@@ -14,7 +14,7 @@ $searchTerm = mysqli_real_escape_string($conn, $searchTerm);
 
 // Perform SQL query
 $sql = "SELECT listing.*, CONCAT(account.first_name, ' ', account.last_name) AS name, account.email, account.address, account.profile FROM listing 
-        INNER JOIN account ON listing.lister_id = account.id WHERE listing.description LIKE '%$searchTerm%'";
+        INNER JOIN account ON listing.lister_id = account.id WHERE listing.description LIKE '%$searchTerm%' OR listing.address LIKE '%$searchTerm%'";
 
 $result = mysqli_query($conn, $sql);
 

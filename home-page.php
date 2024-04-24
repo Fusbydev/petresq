@@ -22,7 +22,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Home</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">        
         <link rel="stylesheet" href="home-page.css">
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lilita+One&display=swap');
@@ -38,13 +40,29 @@
             color: red;
         }
 
+
+
+.container {
+    justify-content: center;
+}
+.tips {
+    height: auto;
+    padding: 0px 100px 0px 100px;
+}
+.navbar {
+    background-color: #074173!important;
+}
+
+.ha {
+    color: black;
+}
         </style>
     </head>
 <body>
     <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand me-auto" href="#">Logo</a>
+            <a class="navbar-brand me-auto" href="#"">PET FINDR<i class="bi bi-search-heart-fill" style="color: pink;"></i>.</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -68,8 +86,8 @@
     <section class="banner">
         <div class="container">
             <div class="banner-content">
-                <h1>Welcome to Pet Finder</h1>
-                <p>"Lost & Found: Reuniting Paws with Hearts."</p>
+                <h1 class="ha">WELCOME TO PET FINDR.</h1>
+                <h4 class="ha">"LOST BUT NOT FORGOTTEN, FINDING HOME AGAIN TOGETHER"</h4>
             </div>
         </div>
     </section>
@@ -86,27 +104,40 @@
     </section>
 
 
-    <section class="description">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="description-item"> 
-                        <img src="shrek.png" alt="Image 1" class="img-fluid">
-                    </div>
+    <section class="tips">
+                <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="10000">
+                <img src="tips/Mike.png" class="d-block w-100" alt="...">
                 </div>
-                <div class="col">
-                    <div class="description-item">
-                        <img src="shrek.png" alt="Image 2" class="img-fluid">
-                    </div>
+                <div class="carousel-item" data-bs-interval="2000">
+                <img src="tips/Mike (2).png" class="d-block w-100" alt="...">
                 </div>
-                <div class="col">
-                    <div class="description-item">
-                        <img src="shrek.png" alt="Image 3" class="img-fluid">
-                    </div>
+                <div class="carousel-item">
+                <img src="tips/Mike (3).png" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                <img src="tips/Mike (4).png" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                <img src="tips/Mike (5).png" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                <img src="tips/Mike (6).png" class="d-block w-100" alt="...">
                 </div>
             </div>
-        </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+            </div>
     </section>
+
+
 
 <footer class="mt-5 d-flex justify-content-between align-items-center footer-bg">
         <div class="container">

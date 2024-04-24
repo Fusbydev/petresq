@@ -17,13 +17,17 @@
           background-size: cover;
           background-position: center;
         }
+        .navbar {
+    background-color: #074173!important;
+}
+
   </style>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand me-auto" href="#">Logo</a>
+    <a class="navbar-brand me-auto" href="#">PET FINDR<i class="bi bi-search-heart-fill" style="color: pink;"></i>.</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

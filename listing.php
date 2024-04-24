@@ -25,7 +25,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $image_size = $_FILES['image']['size'];
             $image_temp = $_FILES['image']['tmp_name'];
             $error = $_FILES['image']['error'];
-
+            
+            
             if($error === 0) {
                 if($image_size < 0) {
                     echo "<script>alert('File size too big')</script>";
@@ -83,20 +84,44 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     //submit post
-    if(isset($_POST["post"])){
-        $lister_id = filter_input(INPUT_POST, "lister_id");
-        $item_id = filter_input(INPUT_POST, "item_id");
-        $desc = filter_input(INPUT_POST, "descriptionPost");
-        $image = "IMG-661a972b3f8675.73217380.jpg";
+    if(isset($_POST["up"])) {
+        $lister_id = filter_input(INPUT_POST, "lister_id", FILTER_SANITIZE_STRING);
+        $item_id = filter_input(INPUT_POST, "item_id", FILTER_SANITIZE_STRING);
+        $desc = filter_input(INPUT_POST, "descriptionPost", FILTER_SANITIZE_STRING);
+    
+        $image_name = $_FILES['imagePost']['name'];
+        $image_size = $_FILES['imagePost']['size'];
+        $image_temp = $_FILES['imagePost']['tmp_name'];
+        $error = $_FILES['imagePost']['error'];
 
-        $sql = "INSERT INTO waiting (listing_id, item_id, description, image, name) VALUES ('$lister_id', '$item_id', '$desc', '$image', '$name')";
-        header("Location: ".$_SERVER['REQUEST_URI']);   
-    if(mysqli_query($conn, $sql)){
-        echo "<script>alert('post uploaded, wait for approval')</script>";
-    } else{
-        echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+        if($error ===0) {
+            if($image_size < 0) {
+                echo "<script>alert('File size too big')</script>";
+            } else {
+                $image_ex = strtolower(pathinfo($image_name, PATHINFO_EXTENSION));
+                $allowed_ex = array("png", "jpg", "jpeg");
+    
+                if(in_array($image_ex, $allowed_ex)) {
+                    $new_image_name = uniqid("IMG-", true) . '.' . $image_ex;
+                    move_uploaded_file($image_temp, 'assets-pic/'.$new_image_name);
+                    $sql = "INSERT INTO waiting (listing_id, item_id, description, image, name) VALUES ('$lister_id', '$item_id', '$desc', '$new_image_name', '$name')";
+    
+                    if(mysqli_query($conn, $sql)){
+                        echo "<script>alert('Post uploaded, wait for approval')</script>";
+                    } else {
+                        echo "<script>alert('Error uploading file')</script>";
+                    }
+                } else {
+                    echo "<script>alert('cannot accept file type')</script>";
+                }
+            }
+        } else {
+            echo "error";
+        }
     }
-    }
+    
+
+    
 }
 ?>
 
@@ -108,6 +133,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <title>Bootstrap demo</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js "></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="magnify.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="style.css">
@@ -165,6 +191,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         border-radius: 10px;
         justify-content: center;
     }
+    .navbar {
+    background-color: #074173!important;
+}
+
     .name-cont {
         display:flex;
     }
@@ -224,7 +254,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand me-auto" href="#">Logo</a>
+        <a class="navbar-brand me-auto" href="#">PET FINDR<i class="bi bi-search-heart-fill" style="color: pink;"></i>.</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -386,33 +416,32 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </div>
 <div id="postModal" class="modal" tabindex="-1" aria-labelledby="viewlistSeen" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Create Post</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      <form method="post" enctype="multipart/form-data" action="#">
-          <div class="form-group">
-            <label for="description">Description:</label>
-            <textarea id="descriptionPost" name="descriptionPost" class="form-control" rows="4" cols="50"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="image">Image:</label>
-            <div class="addimage">
-              <input type="file" id="imagePost" name="image">
-              <label for="image"><i class="fa fa-camera"></i></label>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" enctype="multipart/form-data" id="postForm" action="#">
+                        <div class="form-group">
+                            <label for="description">Description:</label>
+                            <textarea id="descriptionPost" name="descriptionPost" class="form-control" rows="4" cols="50"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="image">Image:</label>
+                            
+                                <input type="file" name="imagePost" id="image" class="image">
+                                
+                        </div>
+                        <input type="submit" class="btn btn-primary" id="submitPost" name="up"></input>
+                        <input type="text" name="lister_id" hidden value="" id="listerPost">
+                        <input type="text" name="item_id" hidden value="" id="itemPost">
+                    </form>
+                </div>
             </div>
-          </div>
-          <button type="submit" class="btn btn-primary" id="submitPost" name="post">Post</button>
-          <input type="text" name="lister_id" hidden value="" id="listerPost">
-          <input type="text" name="item_id" hidden value="" id="itemPost">
-        </form>
-      </div>
+        </div>
     </div>
-  </div>
-</div>
 <section id="feed">
     <div class="container1">
         <div class="container mt-5">
@@ -438,6 +467,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <script>
 
 $(document).ready(function() {
+    
     $.ajax({
             url: "accomplished.php",
             method: "GET",

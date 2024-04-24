@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -34,12 +36,16 @@
             height: auto; /* Set height to auto */
             width: auto; /* Set width to auto */
         }
+        .navbar {
+    background-color: #074173!important;
+}
+
     </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand me-auto" href="#">Logo</a>
+    <a class="navbar-brand me-auto" href="#">PET FINDR<i class="bi bi-search-heart-fill" style="color: pink;"></i>.</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -147,7 +153,7 @@
                 <div class="card">
                     <div class="card-body text-center">
                         <div class="profile-image mb-4">
-                            <img src="profile.jpg" alt="Profile Image" class="img-fluid" style="width: 200px;">
+                            <img src="assets-pic/${item.image}" alt="Profile Image" class="img-fluid" style="width: 200px;">
                         </div>
                         <h5 class="card-title">${item.name}</h5>
                         <p class="card-text">${item.description}</p>

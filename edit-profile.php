@@ -36,6 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Update the user's profile picture in the database
                 $updatePictureSql = "UPDATE account SET profile = '$file_name' WHERE id = $userId";
                 mysqli_query($conn, $updatePictureSql);
+                
             }else{
                 print_r($errors);
             }
@@ -43,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "Error updating profile: " . mysqli_error($conn);
     }
-
+    header("Location: ".$_SERVER['REQUEST_URI']);
     // Close the database connection
     mysqli_close($conn);
 }
@@ -57,21 +58,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Edit Profile</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lilita+One&display=swap');
         body, h1, h2, h3, h4, h5, h6, p, a, button {
             font-family: "Lilita One", sans-serif;
         }
+        .navbar {
+    background-color: #074173!important;
+}
+body {
+        background-image: url('background.png');
+        background-size: cover;
+        background-position: center;
+        }
+
     </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand me-auto" href="#">Logo</a>
+    <a class="navbar-brand me-auto" href="#">PET FINDR<i class="bi bi-search-heart-fill" style="color: pink;"></i>.</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -115,15 +127,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="form-group">
             <label for="password">Password:</label>
             <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" readonly>
-            <button type="button" class="btn btn-secondary mt-2" id="editPasswordBtn" data-toggle="modal" data-target="#passwordModal">Edit Password</button>
+            <button type="button" class="btn btn-secondary mt-2" id="editPasswordBtn" data-toggle="modal" data-target="passwordModal">Edit Password</button>
         </div>
         <div class="form-group">
             <label for="address">Address:</label>
-            <textarea class="form-control" id="address" name="address" rows="3" placeholder="Enter your address"></textarea>
+            <textarea class="form-control mb-4" id="address" name="address" rows="3" placeholder="Enter your address"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary" id="submit">Save Changes</button>
+        <button type="submit" class="btn btn-warning mb-4" id="submit">Save Changes</button>
     </form>
 </div>
+
 
 <!-- Password Modal -->
 <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel" aria-hidden="true">
@@ -131,9 +144,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="passwordModalLabel">Edit Password</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -146,7 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" id="savePasswordBtn">Save Changes</button>
             </div>
         </div>
@@ -171,6 +181,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     });
     $("#home").click(function() {
         window.location.href = "home-page.php?user_id=" + userId;
+    });
+
+    $("#close").click(function(){
+        $('#passwordModal').modal('hide');
     });
 
     // Fetch user data
@@ -203,8 +217,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $('#editPasswordBtn').click(function() {
         // Clear old password field
         $('#oldPassword').val('');
-        // Clear new password field
+        // Clear new password fiel
         $('#newPassword').val('');
+        $('#passwordModal').modal('show');
     });
 
     // Handle click on save password button
