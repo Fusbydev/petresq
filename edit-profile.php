@@ -186,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if(image.length > 0) {
                 $("#pfp").attr('src', 'profile-pix/'+image+'');
             } else {
-                $("#pfp").attr('src', 'shrek.png');
+                $("#pfp").attr('src', 'profile-pix/no-profile-picture-15257.png');
             }
             
             $('#fname').val(data[0].first_name); // Accessing the first element of the array

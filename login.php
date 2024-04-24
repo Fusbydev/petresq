@@ -38,7 +38,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
             font-family: "Lilita One", sans-serif;
         }
 body {
-    font-family: sans-serif;
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -96,6 +96,9 @@ body {
     margin: 0 auto; /* Center the image horizontally */
     
 }
+::placeholder {
+    color: black;
+}
 a {
     color: black;
 }
@@ -115,9 +118,9 @@ input {
                 <h1><center>Login</center></h1>
                 <form action="" method="post">
                     <label for="username">Email</label>
-                    <input type="text" id="username" name="username" required>
+                    <input type="text" id="username" name="username" placeholder="Email" required>
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
                     <button type="submit">Login</button>
                 </form>
                 <p class="register-button">don't have an account? <a href="registration.php">click here</a></p>

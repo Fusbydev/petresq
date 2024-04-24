@@ -55,8 +55,13 @@
                   $sql = "SELECT CONCAT(first_name, ' ', last_name) AS name, address, profile FROM account WHERE id = $userid";
                   $result = mysqli_query($conn, $sql);
                   while($row = mysqli_fetch_assoc($result)) {
-                    echo "<img src='profile-pix/". $row['profile']. "'alt='Profile Picture' class='profile-picture mt-4 mx-auto d-block'>";
-                    echo "<h2 class='mt-3'>". $row['name']. "</h2>";
+                    if(strlen($row['profile']) <= 0) {
+                      echo "<img src='profile-pix/no-profile-picture-15257.png'alt='Profile Picture' class='profile-picture mt-4 mx-auto d-block'>";
+                    } else {
+                      echo "<img src='profile-pix/". $row['profile']. "'alt='Profile Picture' class='profile-picture mt-4 mx-auto d-block'>";
+                    }
+                    
+                    echo "<h2 class='mt-3'>".$row['name']. "</h2>";
                     echo "<p>". $row['address']. "</p>";
                 }
               }

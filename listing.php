@@ -684,8 +684,9 @@ function viewListSeen(id, image, name, description, address, email) {
     console.log(id);
 }
 function listing(id, image, name, description, address, email, lastSeen, lost, date, profile, lister_id) {
-    console.log(profile);
+    console.log(profile.length);
     var container = $("#dataset");
+
     if (lost == 1) {
         var truncatedDescription = description.length > 100 ? description.substring(0, 50) + '...' : description;
         var cardHtml = `
@@ -761,6 +762,8 @@ function listing(id, image, name, description, address, email, lastSeen, lost, d
 
     // Initialize magnify on .zoom elements
     $('.zoom').magnify();
+    console.log(profile)
+    
 }
 
 function startTextToSpeech(name, description, address) {
