@@ -738,7 +738,7 @@ function listing(id, image, name, description, address, email, lastSeen, lost, d
                         <p>Address: ${address}</p>
                         <p>Last Seen: ${lastSeen}</p>
                         <p style="opacity:0.5;">${date}</p>
-                        <button class="btn btn-warning btn-sm position-absolute bottom-0 start-0 mb-2 me-2" onclick="startTextToSpeech('${name}', '${description}','${address}')">
+                        <button class="btn btn-warning btn-sm position-absolute bottom-0 start-0 mb-2 me-2" onclick="startTextToSpeechLost('${name}', '${description}','${address}', '${lastSeen}')">
                             <i class="fas fa-volume-up"></i>
                             </button>
                             <button class="btn btn-warning btn-sm position-absolute bottom-0 start-5 mb-2 me-2" onclick="openPostModal('${lister_id}','${id}')">create post</button>
@@ -811,7 +811,21 @@ function startTextToSpeech(name, description, address) {
     }
     console.log(description)
 }
+function startTextToSpeechLost(name, description, address, lastSeen) {
+    
+    if ('speechSynthesis' in window) {
+            const textToRead = "This pet is is lost by "+name+" the pet description is"+ description + ", if found contact " + name + ", his her address is " + address + ", the pet was last seen " + lastSeen+".";
+            // Create a new SpeechSynthesisUtterance object
+            const message = new SpeechSynthesisUtterance(textToRead);
 
+            // Speak the text
+            window.speechSynthesis.speak(message);
+    } else {
+        // If the browser doesn't support the Web Speech API
+        alert('Sorry, your browser does not support text-to-speech functionality.');
+    }
+    console.log(description)
+}
     </script>
     </body>
     </html>
