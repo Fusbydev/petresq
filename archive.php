@@ -1,3 +1,33 @@
+<?php
+require_once "connection.php";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data
+    $id = $_POST['formid'];
+    $name = $_POST['formname'];
+    $description = $_POST['formdesc'];
+    $address = $_POST['formadd'];
+    $lastSeen = $_POST['formlastseen'];
+
+    // Validate and sanitize the input data (you should add more validation/sanitization as needed)
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+    $name = filter_var($name, FILTER_SANITIZE_STRING);
+    $description = filter_var($description, FILTER_SANITIZE_STRING);
+    $address = filter_var($address, FILTER_SANITIZE_STRING);
+    $lastSeen = filter_var($lastSeen, FILTER_SANITIZE_STRING);
+
+    if(strlen($lastSeen) == 0) {
+        $sql = "UPDATE listing SET name = '$name', description = '$description', address = '$address', last_seen = '$lastSeen', lost = 0 WHERE id = $id";
+        mysqli_query($conn, $sql);
+    } else if (strlen($lastSeen) > 0) {
+        $sql = "UPDATE listing SET name = '$name', description = '$description', address = '$address', last_seen = '$lastSeen', lost = 1 WHERE id = $id";
+        mysqli_query($conn, $sql);
+    }
+    
+    // Redirect back to the listing page after the update
+    header("Location: archive.php?user_id={$_GET['user_id']}");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -112,7 +142,7 @@
     <div class="modal fade" id="viewlistLost" tabindex="-1" aria-labelledby="viewlistLost" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-        <form id="lostForm" method="POST" enctype="multipart/form-data">
+        <form id="lostForm" method="POST" enctype="multipart/form-data" action="#">
                 <div class="modal-header">
                     <h5 class="modal-title" id="viewlistLost">EDIT INFO</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

@@ -719,6 +719,7 @@ function listing(id, image, name, description, address, email, lastSeen, lost, d
 
     if (lost == 1) {
         var truncatedDescription = description.length > 100 ? description.substring(0, 50) + '...' : description;
+        var truncatedAddress = address.length > 20 ? address.substring(0, 20) + '...' : address;
         var cardHtml = `
         <div class="col-md-4 containerCard">
             <div class="card position-relative">
@@ -735,7 +736,7 @@ function listing(id, image, name, description, address, email, lastSeen, lost, d
                     </button>
                     </div>
                         <p>Description: ${truncatedDescription}</p>
-                        <p>Address: ${address}</p>
+                        <p>Address: ${truncatedAddress}</p>
                         <p>Last Seen: ${lastSeen}</p>
                         <p style="opacity:0.5;">${date}</p>
                         <button class="btn btn-warning btn-sm position-absolute bottom-0 start-0 mb-2 me-2" onclick="startTextToSpeechLost('${name}', '${description}','${address}', '${lastSeen}')">
