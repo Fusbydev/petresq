@@ -5,7 +5,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     $email = $_POST['username'];
     $password = $_POST['password'];
 
-    $stmnt = $conn->prepare("SELECT id, email, pasword FROM account WHERE email = ?");
+    $stmnt = $conn->prepare("SELECT id, email, pasword, verified FROM account WHERE email = ?");
     $stmnt->bind_param("s", $email);
     $stmnt->execute();
     $result = $stmnt->get_result();
@@ -14,8 +14,14 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
             $row = $result->fetch_assoc();
             $stored_pass = $row["pasword"];
             $user_id = $row["id"];
+            $verify = $row["verified"];
             if (password_verify($password, $stored_pass)) {
-                header("location: home-page.php?user_id=$user_id");
+                if($verify == "false") {
+                    header("location: verification.php");
+                } else if($verify == "true") {
+                    header("location: home-page.php?user_id=$user_id");
+                }
+                
             }
         } else {
             echo "<script>alert('user not found');</script>";

@@ -1,5 +1,11 @@
 <?php
 require_once "connection.php";
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'phpmailer/src/Exception.php';
+require 'phpmailer/src/PHPMailer.php';
+require 'phpmailer/src/SMTP.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['register'])) {
@@ -23,14 +29,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if ($password === $confirm) {
                     // Hash the password before storing it in the database for security reasons
                     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
+                    // Generate a random 5-digit number
+                    $random_number = mt_rand(10000, 99999);
                     // Prepare and execute the SQL query
-                    $sql = "INSERT INTO account (email, first_name, last_name, pasword, address, profile) VALUES ('$email','$fname','$lname','$hashed_password','$address', 'no-profile-picture-15257.png')";
+                    $sql = "INSERT INTO account (email, first_name, last_name, pasword, address, profile, otp_code, verified) VALUES ('$email','$fname','$lname','$hashed_password','$address', 'no-profile-picture-15257.png', '$random_number','false')";
                     if (mysqli_query($conn, $sql)) {
-                        echo "<script>alert('Registration successful');</script>";
-                        header("location: login.php");
+                        sendEmail($email, $random_number);
+                        header("location: verification.php");
                         exit;
-
                     } else {
                         echo "<script>alert('Error: " . mysqli_error($conn) . "')</script>";
                     }
@@ -40,6 +46,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     }
+}
+
+function sendEmail($email, $otp) {
+  try {
+    $mail = new PHPMailer(true);
+
+    // SMTP configuration
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'petresq4904@gmail.com';
+    $mail->Password = 'heox htft eweh tytv';
+    $mail->SMTPSecure = 'tls';
+    $mail->Port = 587;
+
+    // Sender and recipient
+    $mail->setFrom("petresq4904@gmail.com"); // Set sender's email address and name
+    $mail->addAddress($email);
+
+    // Email content
+    $mail->isHTML(true);
+    $mail->Subject ="OTP code for Verification";
+    $mail->Body = $otp;
+    
+    // Send email
+    $mail->send();
+    echo 'Email sent successfully.';
+} catch (Exception $e) {
+    echo "Email sending failed. Error: {$mail->ErrorInfo}";
+}
 }
 ?>
 
