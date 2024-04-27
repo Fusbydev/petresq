@@ -1,6 +1,13 @@
 <?php
 require_once "connection.php";
 
+use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+    
+    require 'phpmailer/src/Exception.php';
+    require 'phpmailer/src/PHPMailer.php';
+    require 'phpmailer/src/SMTP.php';
+
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     // Handle form submission
     $user_id = $_GET['user_id'];
@@ -87,6 +94,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     if(isset($_POST["up"])) {
         $lister_id = filter_input(INPUT_POST, "lister_id", FILTER_SANITIZE_STRING);
         $item_id = filter_input(INPUT_POST, "item_id", FILTER_SANITIZE_STRING);
+        $recipient_email = filter_input(INPUT_POST, "listeremail", FILTER_SANITIZE_STRING);
         $desc = filter_input(INPUT_POST, "descriptionPost", FILTER_SANITIZE_STRING);
     
         $image_name = $_FILES['imagePost']['name'];
@@ -105,9 +113,35 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     $new_image_name = uniqid("IMG-", true) . '.' . $image_ex;
                     move_uploaded_file($image_temp, 'assets-pic/'.$new_image_name);
                     $sql = "INSERT INTO waiting (listing_id, item_id, description, image, name) VALUES ('$lister_id', '$item_id', '$desc', '$new_image_name', '$name')";
-    
                     if(mysqli_query($conn, $sql)){
-                        echo "<script>alert('Post uploaded, wait for approval')</script>";
+                            try {
+                                $mail = new PHPMailer(true);
+                        
+                                // SMTP configuration
+                                $mail->isSMTP();
+                                $mail->Host = 'smtp.gmail.com';
+                                $mail->SMTPAuth = true;
+                                $mail->Username = 'petresq4904@gmail.com';
+                                $mail->Password = 'heox htft eweh tytv';
+                                $mail->SMTPSecure = 'tls';
+                                $mail->Port = 587;
+                        
+                                // Sender and recipient
+                                $mail->setFrom("petresq4904@gmail.com"); // Set sender's email address and name
+                                $mail->addAddress($recipient_email);
+                        
+                                // Email content
+                                $mail->isHTML(true);
+                                $mail->Subject = "Someone tagged you in a post";
+                                $mail->Body = "Someone just made a post about your listing, verify the post";
+                                
+                                // Send email
+                                $mail->send();
+                                echo "<script>alert('email sent, wait for approval')</script>";
+                                header("Location: ".$_SERVER['REQUEST_URI']);
+                            } catch (Exception $e) {
+                                echo "Email sending failed. Error: {$mail->ErrorInfo}";
+                            }
                     } else {
                         echo "<script>alert('Error uploading file')</script>";
                     }
@@ -437,6 +471,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="submit" class="btn btn-primary" id="submitPost" name="up"></input>
                         <input type="text" name="lister_id" hidden value="" id="listerPost">
                         <input type="text" name="item_id" hidden value="" id="itemPost">
+                        <input type="text" name="listeremail" hidden value="" id="listerEmail">
                     </form>
                 </div>
             </div>
@@ -467,6 +502,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <script>
 
 $(document).ready(function() {
+
     
     $.ajax({
             url: "accomplished.php",
@@ -667,10 +703,11 @@ function addListing() {
     listingModal.show();
 }
 
-function openPostModal(lister_id, id) {
+function openPostModal(lister_id, id, email) {
     console.log(lister_id);
     $("#listerPost").val(lister_id);
         $("#itemPost").val(id);
+        $("#listerEmail").val(email);
     var postModal = new bootstrap.Modal(document.getElementById('postModal'), {
         //$("#listerPost").val(lister_id);
         //$("#itemPost").val(id);
@@ -742,7 +779,7 @@ function listing(id, image, name, description, address, email, lastSeen, lost, d
                         <button class="btn btn-warning btn-sm position-absolute bottom-0 start-0 mb-2 me-2" onclick="startTextToSpeechLost('${name}', '${description}','${address}', '${lastSeen}')">
                             <i class="fas fa-volume-up"></i>
                             </button>
-                            <button class="btn btn-warning btn-sm position-absolute bottom-0 start-5 mb-2 me-2" onclick="openPostModal('${lister_id}','${id}')">create post</button>
+                            <button class="btn btn-warning btn-sm position-absolute bottom-0 start-5 mb-2 me-2" onclick="openPostModal('${lister_id}','${id}', '${email}')">create post</button>
                             <button class="btn btn-primary btn-sm position-absolute bottom-0 end-0 mb-2 me-2" onclick="openModal('${email}')">Message</button>
                     </div>
                 </div>
@@ -776,7 +813,7 @@ function listing(id, image, name, description, address, email, lastSeen, lost, d
                         <button class="btn btn-warning btn-sm position-absolute bottom-0 start-0 mb-2 me-2" onclick="startTextToSpeech('${name}', '${description}','${address}')">
                             <i class="fas fa-volume-up"></i>
                             </button>
-                            <button class="btn btn-warning btn-sm position-absolute bottom-0 start-5 mb-2 me-2" onclick="openPostModal('${lister_id}','${id}')">create post</button>                                            
+                            <button class="btn btn-warning btn-sm position-absolute bottom-0 start-5 mb-2 me-2" onclick="openPostModal('${lister_id}','${id}', '${email}')">create post</button>                                            
     <button class="btn btn-primary btn-sm position-absolute bottom-0 end-0 mb-2 me-2" onclick="openModal('${email}')">Message</button>
 </button>
                     </div>

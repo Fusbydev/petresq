@@ -1,7 +1,7 @@
 <?php
-$db_server = "localhost:3307";
+$db_server = "localhost";
 $db_user = "root";
-$db_password = "password";
+$db_password = "";
 $db_name = "petresq";
 
 $conn = "";
