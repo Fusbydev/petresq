@@ -200,6 +200,9 @@ a {
   margin-top: 0;
   color: orange;
 }
+button {
+  font-family:"Lilita One", sans-serif;
+}
 /* Media query for smaller screens (adjust as needed) */
 @media only screen and (max-width: 576px) {
   .registration-form {
@@ -208,6 +211,7 @@ a {
 }
 
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
 <div class="registration-form">
@@ -218,19 +222,19 @@ a {
     </div>
     <label for="email">Email</label>
     
-    <input type="email" id="email" name="email" placeholder="Enter Email">
+    <input type="email" id="email" name="email" placeholder="Enter Email" required>
     <label for="name">First Name</label>
-    <input type="text" id="name" name="name" placeholder="Enter First Name">
+    <input type="text" id="name" name="name" placeholder="Enter First Name" required>
     <label for="last_name">Last Name</label>
-    <input type="text" id="last_name" name="last_name" placeholder="Enter Last Name">
+    <input type="text" id="last_name" name="last_name" placeholder="Enter Last Name" required>
     <label for="address">Address</label>
-    <textarea id="address" name="address" placeholder="Enter Address"></textarea>
+    <textarea id="address" name="address" placeholder="Enter Address" required></textarea>
     <label for="password">Password</label>
-    <input type="password" id="password" name="password" placeholder="Enter Password">
+    <input type="password" id="password" name="password" placeholder="Enter Password" required>
     <label for="retype_password">Confirm Password</label>
     <input type="password" id="retype_password" name="retype_password" placeholder="Confirm Password">
-    <p href="login.php" class="login-button">Already have an account? <a href="login.php">Click Here</a></p>
-    <button type="submit" name="register">Register</button>
+    <p class="login-button">Already have an account? <a href="index.php">Click Here</a></p>
+    <button type="submit" name="register">Register<i class="bi bi-box-arrow-in-right"></i></button>
     
   </form>
 </div>
@@ -255,8 +259,9 @@ function validateForm() {
  
   return true; // Allow form submission if a field has a value
 }
-</script>
 
+//CREATED BY FUSBYDEV FINAL PROJECT APRIL 27 2024
+</script>
 
 </body>
 </html>

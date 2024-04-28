@@ -68,14 +68,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#" id="home">Home</a>
+                <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#" id="home">Home<i class="bi bi-house-heart-fill"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" id="listing">Listing</a>
+                        <a class="nav-link" href="#" id="listing">Listing<i class="bi bi-journal-album"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" id="profile">Profile</a>
+                        <a class="nav-link" href="#" id="profile">Profile<i class="bi bi-person-fill"></i></a>
                     </li>
                 </ul>
             </div>
@@ -142,9 +142,9 @@
 <footer class="mt-5 d-flex justify-content-between align-items-center footer-bg">
         <div class="container">
           <div class="contact-info d-flex flex-wrap">
-            <p>Email: <a href="#">youremail@email.com</a></p>
+            <p>Email: <a href="#">petresq4904@gmail.com</a></p>
             <p>Phone: <a href="#">555-555-5555</a></p>
-            <p>Address: 123 Main Street, Anytown, CA 12345</p>
+            <p>Address: Technological Institute of the Philippines - Arlegui Campus, 1338 Arlegui St, Quiapo, Manila, 1001 Metro Manila</p>
           </div>
           <p>&copy; 2024 PetFinder. All Rights Reserved.</p>
           

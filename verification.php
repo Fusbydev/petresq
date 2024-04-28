@@ -31,7 +31,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
             mysqli_stmt_execute($stmt);
             
             // Redirect to login.php
-            header("location: login.php");
+            header("location: index.php");
             exit(); // Ensure that no code is executed after redirection
         } else {
             echo "<script>alert('INVALID CODE');</script>";

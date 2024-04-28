@@ -165,7 +165,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Bootstrap demo</title>
+        <title>Listing</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js "></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -296,16 +296,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#" id="home">Home</a>
+                        <a class="nav-link" aria-current="page" href="#" id="home">Home<i class="bi bi-house-heart-fill"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" id="listing">Listing</a>
+                        <a class="nav-link" href="#" id="listing">Listing<i class="bi bi-journal-album"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" id="profile">Profile</a>
+                        <a class="nav-link active" href="#" id="profile">Profile<i class="bi bi-person-fill"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#feed" id="profile">Accomplished</a>
+                        <a class="nav-link" href="#feed" id="profile">Accomplished<i class="bi bi-check-circle-fill"></i></a>
                     </li>
                 </ul>
             </div>
@@ -318,7 +318,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="col-md-8 text-center">
                 <form class="d-flex mb-3" id="form-search">
                     <div class="input-group" style="margin-left:200px;">
-                        <input class="form-control form-control-sm me-2" type="search" placeholder="Search" aria-label="Search" id="search-input">
+                        <input class="form-control form-control-sm me-2" type="search" placeholder="Search Description or Address" aria-label="Search" id="search-input">
                         <button class="btn btn-primary mt-0" type="button" id="search"><i class="fa fa-search" aria-hidden="true"></i></button>
                     </div>
             </div>
@@ -366,7 +366,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="sendEmail">Send</button>
+                        <button type="button" class="btn btn-primary" id="sendEmail">Send <i class="bi bi-send-fill"></i></button>
                     </div>
                 </div>
             </div>
@@ -402,7 +402,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="text" name="last-seen" id="lastSeen" class="lastSeen">
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="uploadListing" name="upload">Upload</button>
+                        <button type="submit" class="btn btn-primary" id="uploadListing" name="upload">Upload <i class="bi bi-upload"></i></button>
                     </div>
                 </form>
             </div>
@@ -461,7 +461,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     <form method="post" enctype="multipart/form-data" id="postForm" action="#">
                         <div class="form-group">
                             <label for="description">Description:</label>
-                            <textarea id="descriptionPost" name="descriptionPost" class="form-control" rows="4" cols="50"></textarea>
+                            <textarea id="descriptionPost" name="descriptionPost" class="form-control mb-3" rows="4" cols="50" placeholder="What's on your mind"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="image">Image:</label>
@@ -482,7 +482,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container1">
         <div class="container mt-5">
             <div class="row waiting-container">
-                <h1 class="la mt-5">accomplished and user feedback</h1>
+                <h1 class="la mt-5">accomplished and user feedback <i class="bi bi-check-circle-fill"></i></h1>
 
             </div>
         </div>
@@ -492,9 +492,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="fixed-bottom-right">
         <button class="btn btn-primary btn-lg rounded-circle" onclick="addListing()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fi   ll="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                <path d="M8 1a.75.75 0 0 1 .75.75v6.5h6.5a.75.75 0 0 1 0 1.5h-6.5v6.5a.75.75 0 0 1-1.5 0v-6.5h-6.5a.75.75 0 0 1 0-1.5h6.5v-6.5A.75.75 0 0 1 8 1zm0 15a.75.75 0 0 1-.75-.75v-6.5H.75a.75.75 0 0 1 0-1.5H7.25V1.75a.75.75 0 0 1 1.5 0v6.5H15.25a.75.75 0 0 1 0 1.5H8.75v6.5c0 .414-.336.75-.75.75z"/>
-            </svg>
+        <i class="bi bi-plus-circle-fill"></i>
         </button>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

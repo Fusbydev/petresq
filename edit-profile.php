@@ -89,15 +89,15 @@ body {
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#" id="home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" id="listing">Listing</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" id="profile">Profile</a>
-                </li>
+            <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#" id="home">Home<i class="bi bi-house-heart-fill"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="listing">Listing<i class="bi bi-journal-album"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" id="profile">Profile<i class="bi bi-person-fill"></i></a>
+                    </li>
             </ul>
         </div>
     </div>

@@ -114,6 +114,7 @@ input {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
 <div class="container mt-5">
@@ -127,7 +128,7 @@ input {
                     <input type="text" id="username" name="username" placeholder="Email" required>
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" placeholder="Password" required>
-                    <button type="submit">Login</button>
+                    <button type="submit">Login<i class="bi bi-box-arrow-in-right"></i></button>
                 </form>
                 <p class="register-button">don't have an account? <a href="registration.php">click here</a></p>
             </div>
